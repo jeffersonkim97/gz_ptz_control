@@ -1,0 +1,37 @@
+1. Install Gazebo Garden from Source:
+https://gazebosim.org/docs/garden/install_ubuntu_src
+
+2. Download ros_gz
+https://github.com/gazebosim/ros_gz/tree/39cdcf88e762589595222d74e41f22b1d876aef1/ros_gz_bridge
+
+3. Write yaml for ROS_TO_GZ for pan_cmd/tilt_cmd
+# Full set of configurations
+- ros_topic_name: "pan_cmd"
+  gz_topic_name: "pan_cmd"
+  ros_type_name: "std_msgs/Float64"
+  gz_type_name: "gz.msgs.Double"
+  subscriber_queue: 5
+  publisher_queue: 6
+  lazy: true
+  direction: "ROS_TO_GZ"
+
+- ros_topic_name: "tilt_cmd"
+  gz_topic_name: "tilt_cmd"
+  ros_type_name: "std_msgs/Float64"
+  gz_type_name: "gz.msgs.Double"
+  subscriber_queue: 5
+  publisher_queue: 6
+  lazy: true
+  direction: "ROS_TO_GZ"
+  
+4. Execute ros2 bridge:
+ros2 run ros_gz_bridge parameter_bridge --ros-args -p config_file:=/home/jeff/git/ros2_TSUNOMI/src/ros_gz/ros_gz_bridge/test/config/tsunomi.yaml
+
+5. Execute tsunomi world
+gz sim tsunomi.sdf -r
+
+6. Execute ros2 topic publisher for test:
+Publish ros2 topic /pan_cmd in std_msgs/Float64 message
+This will be bridged to gz sim in gz.msgs.Double
+ros2 topic pub /pan_cmd std_msgs/Float64 " "data: 1"
+

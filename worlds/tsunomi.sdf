@@ -1,12 +1,6 @@
 <?xml version="1.0" ?>
 <!--
-  Gazebo joint position controller plugin demo
-
-  Try sending joint position commands:
-
-    gz topic -t "/rotor_cmd" -m gz.msgs.Double -p "data: -1.0"
-
-    gz topic -t "/rotor_cmd" -m gz.msgs.Double -p "data: 1.0"
+  gz topic -t "/pan_cmd" -m gz.msgs.Double -p "data: 0.5"
 -->
 <sdf version="1.6">
   <world name="default">
@@ -249,10 +243,6 @@
     </light>
 
     <model name="PTZCamera">
-      <plugin
-        filename="gz-sim-joint-state-publisher-system"
-        name="gz::sim::systems::JointStatePublisher">
-      </plugin>
       <pose>0 0 0 0 1.57 0</pose>
       <!-- Cylinder -->
       <link name="base_link">
@@ -405,6 +395,34 @@
         <i_min>-1</i_min>
         <cmd_max>1000</cmd_max>
         <cmd_min>-1000</cmd_min>
+      </plugin>
+
+      <plugin
+          filename="gz-sim-joint-controller-system"
+          name="gz::sim::systems::JointController">
+        <joint_name>tilt</joint_name>
+        <joint_name>pan</joint_name>
+        <!-- <sub_topic>drive</sub_topic> -->
+        <use_actuator_msg>true</use_actuator_msg>
+        <actuator_number>0</actuator_number>
+      </plugin>
+      <plugin
+        filename="gz-sim-joint-state-publisher-system"
+        name="gz::sim::systems::JointStatePublisher">
+        <joint_name>tilt</joint_name>
+        <joint_name>pan</joint_name>
+      </plugin>
+      <plugin
+        filename="gz-sim-joint-state-publisher-system"
+        name="gz::sim::systems::JointStatePublisher">
+        <joint_name>pan</joint_name>
+        <topic>ptz_gz_pan</topic>
+      </plugin>
+      <plugin
+        filename="gz-sim-joint-state-publisher-system"
+        name="gz::sim::systems::JointStatePublisher">
+        <joint_name>tilt</joint_name>
+        <topic>ptz_gz_tilt</topic>
       </plugin>
     </model>
   </world>

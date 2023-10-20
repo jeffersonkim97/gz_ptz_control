@@ -5,8 +5,7 @@ from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
-import xacro
-
+from launch.actions import ExecuteProcess
 
 def generate_launch_description():
 
@@ -46,6 +45,7 @@ def generate_launch_description():
             # '/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock',
             # Joint states (IGN -> ROS2)
             '/world/default/model/PTZCamera/joint_state@sensor_msgs/msg/JointState[gz.msgs.Model',
+            '/pan_cmd@sensor_msgs/msg/JointState]gz.msgs.Model',
         ],
         remappings=[
             ('/world/default/model/PTZCamera/joint_state', 'joint_states'),
