@@ -358,11 +358,11 @@
           </dynamics>
         </axis>
       </joint>
-      <plugin
+      <!-- <plugin
         filename="gz-sim-joint-position-controller-system"
         name="gz::sim::systems::JointPositionController">
         <joint_name>pan</joint_name>
-        <topic>pan_cmd</topic>
+        <topic>/pan_cmd</topic>
         <p_gain>1</p_gain>
         <i_gain>0.1</i_gain>
         <d_gain>0.01</d_gain>
@@ -370,7 +370,7 @@
         <i_min>-1</i_min>
         <cmd_max>1000</cmd_max>
         <cmd_min>-1000</cmd_min>
-      </plugin>
+      </plugin> -->
 
       <!-- Joint between base cylinder and sphere for tilt -->
       <joint name="tilt" type="revolute">
@@ -383,10 +383,10 @@
           </dynamics>
         </axis>  
       </joint>
-      <plugin
+      <!-- <plugin
         filename="gz-sim-joint-position-controller-system"
         name="gz::sim::systems::JointPositionController">
-        <joint_name>tilt</joint_name>
+        <joint_name>/tilt</joint_name>
         <topic>tilt_cmd</topic>
         <p_gain>1</p_gain>
         <i_gain>0.1</i_gain>
@@ -395,17 +395,17 @@
         <i_min>-1</i_min>
         <cmd_max>1000</cmd_max>
         <cmd_min>-1000</cmd_min>
-      </plugin>
+      </plugin> -->
 
       <plugin
           filename="gz-sim-joint-controller-system"
           name="gz::sim::systems::JointController">
         <joint_name>tilt</joint_name>
         <joint_name>pan</joint_name>
-        <!-- <sub_topic>drive</sub_topic> -->
         <use_actuator_msg>true</use_actuator_msg>
         <actuator_number>0</actuator_number>
       </plugin>
+
       <plugin
         filename="gz-sim-joint-state-publisher-system"
         name="gz::sim::systems::JointStatePublisher">
