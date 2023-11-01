@@ -23,6 +23,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'pan_vel_cmd_publisher = gz_ptz_control.ptz_pan_cmd:main',
+            'pan_pos_cmd_publisher = gz_ptz_control.ptz_pan_cmd_pos:main',
         ],
     },
 )

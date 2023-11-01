@@ -37,13 +37,13 @@ def generate_launch_description():
     # )
 
     # Gz - ROS Bridge
+    # ros2 run ros_gz_bridge parameter_bridge /actuators@actuator_msgs/msg/Actuators@gz.msgs.Actuators
+    # ros2 run ros_gz_bridge parameter_bridge /pan_cmd@std_msgs/msg/Float64@gz.msgs.Double
     bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
         arguments=[
-            # Clock (IGN -> ROS2)
-            # '/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock',
-            # Joint states (IGN -> ROS2)
+            # Joint states (GZ -> ROS2)
             '/world/default/model/PTZCamera/joint_state@sensor_msgs/msg/JointState[gz.msgs.Model',
             '/pan_cmd@sensor_msgs/msg/JointState]gz.msgs.Model',
         ],

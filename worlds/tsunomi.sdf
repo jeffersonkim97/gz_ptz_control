@@ -228,6 +228,33 @@
       </link>
     </model>
 
+    <model name="sphere2">
+      <static>true</static>
+      <pose>20 0 1 0 0 0</pose>
+      <link name="sphere_link">
+        <collision name="sphere_collision">
+          <geometry>
+            <sphere>
+              <radius>0.25</radius>
+            </sphere>
+          </geometry>
+        </collision>
+        <visual name="sphere_visual">
+          <geometry>
+            <sphere>
+              <radius>0.25</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient>
+            <diffuse>0 1 0 1</diffuse>
+            <specular>0 1 0 1</specular>
+          </material>
+          <cast_shadows>false</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
     <light type="directional" name="sun">
       <cast_shadows>true</cast_shadows>
       <pose>0 0 10 0 0 0</pose>
@@ -309,12 +336,12 @@
             </box>
           </geometry>
         </collision>
-        <sensor name="camera" type="camera">
+        <sensor name="camera_zoomx1" type="camera">
           <camera>
-            <horizontal_fov>1.047</horizontal_fov>
+            <horizontal_fov>1.22173</horizontal_fov>
             <image>
-              <width>320</width>
-              <height>240</height>
+              <width>640</width>
+              <height>480</height>
             </image>
             <clip>
               <near>0.1</near>
@@ -324,7 +351,58 @@
           <always_on>1</always_on>
           <update_rate>30</update_rate>
           <visualize>true</visualize>
-          <topic>camera</topic>
+          <topic>camera_x1</topic>
+        </sensor>
+        <sensor name="camera_zoomx2" type="camera">
+          <camera>
+            <horizontal_fov>0.6735</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+            </image>
+            <clip>
+              <near>0.1</near>
+              <far>100</far>
+            </clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <topic>camera_x2</topic>
+        </sensor>
+        <sensor name="camera_zoomx3" type="camera">
+          <camera>
+            <horizontal_fov>0.48559</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+            </image>
+            <clip>
+              <near>0.1</near>
+              <far>100</far>
+            </clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <topic>camera_x3</topic>
+        </sensor>
+        <sensor name="camera_zoomx4" type="camera">
+          <camera>
+            <horizontal_fov>0.34659</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+            </image>
+            <clip>
+              <near>0.1</near>
+              <far>100</far>
+            </clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <topic>camera_x4</topic>
         </sensor>
       </link>
       <link name="intermediate">
@@ -358,7 +436,7 @@
           </dynamics>
         </axis>
       </joint>
-      <!-- <plugin
+      <plugin
         filename="gz-sim-joint-position-controller-system"
         name="gz::sim::systems::JointPositionController">
         <joint_name>pan</joint_name>
@@ -370,7 +448,7 @@
         <i_min>-1</i_min>
         <cmd_max>1000</cmd_max>
         <cmd_min>-1000</cmd_min>
-      </plugin> -->
+      </plugin>
 
       <!-- Joint between base cylinder and sphere for tilt -->
       <joint name="tilt" type="revolute">
@@ -383,7 +461,7 @@
           </dynamics>
         </axis>  
       </joint>
-      <!-- <plugin
+      <plugin
         filename="gz-sim-joint-position-controller-system"
         name="gz::sim::systems::JointPositionController">
         <joint_name>/tilt</joint_name>
@@ -395,7 +473,7 @@
         <i_min>-1</i_min>
         <cmd_max>1000</cmd_max>
         <cmd_min>-1000</cmd_min>
-      </plugin> -->
+      </plugin>
 
       <plugin
           filename="gz-sim-joint-controller-system"

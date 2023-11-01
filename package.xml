@@ -3,7 +3,7 @@
 <package format="3">
   <name>gz_ptz_control</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>controller node for PTZ camera model in gz garden</description>
   <maintainer email="jeffersonkim97@gmail.com">jeff</maintainer>
   <license>TODO: License declaration</license>
 
@@ -11,7 +11,11 @@
   <test_depend>ament_flake8</test_depend>
   <test_depend>ament_pep257</test_depend>
   <test_depend>python3-pytest</test_depend>
-
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>random</exec_depend>
+  
   <export>
     <build_type>ament_python</build_type>
   </export>
