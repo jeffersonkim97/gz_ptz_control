@@ -11,6 +11,8 @@ def generate_launch_description():
 
     # Package Directories
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
+    pkg_gz_PTZ_ctr = get_package_share_directory('gz_ptz_control')
+    pkg_ros_gz_bridge = get_package_share_directory('ros_gz_bridge')
 
     # # Robot state publisher
     # robot_state_publisher = Node(
@@ -22,12 +24,12 @@ def generate_launch_description():
     # )
 
     # # Gazebo Sim
-    # gazebo = IncludeLaunchDescription(
-    #     PythonLaunchDescriptionSource(
-    #         os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')
-    #     ),
-    #     launch_arguments={'gz_args': '-r empty.sdf'}.items(),
-    # )
+    gazebo = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')
+        ),
+        launch_arguments={'gz_args': '-r empty.sdf'}.items(),
+    )
 
     # # RViz
     # rviz = Node(
@@ -39,16 +41,29 @@ def generate_launch_description():
     # Gz - ROS Bridge
     # ros2 run ros_gz_bridge parameter_bridge /actuators@actuator_msgs/msg/Actuators@gz.msgs.Actuators
     # ros2 run ros_gz_bridge parameter_bridge /pan_cmd@std_msgs/msg/Float64@gz.msgs.Double
-    bridge = Node(
+    bridge_pan_cmd = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
         arguments=[
-            # Joint states (GZ -> ROS2)
-            '/world/default/model/PTZCamera/joint_state@sensor_msgs/msg/JointState[gz.msgs.Model',
-            '/pan_cmd@sensor_msgs/msg/JointState]gz.msgs.Model',
+            '/world/default/model/PTZCamera/pan_cmd@std_msgs/msg/Float64[gz.msgs.Double',
         ],
-        remappings=[
-            ('/world/default/model/PTZCamera/joint_state', 'joint_states'),
+        output='screen'
+    )
+
+    bridge_tilt_cmd = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=[
+            '/world/default/model/PTZCamera/tilt_cmd@std_msgs/msg/Float64[gz.msgs.Double',
+        ],
+        output='screen'
+    )
+
+    bridge_camera_x1 = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=[
+            '/world/default/model/PTZCamera/camera_x1@sensor_msgs/msg/Image[gz.msgs.Image',
         ],
         output='screen'
     )
@@ -56,10 +71,10 @@ def generate_launch_description():
     return LaunchDescription(
         [
             # Nodes and Launches
-            # gazebo,
+            gazebo,
             # spawn,
-            bridge,
-            # robot_state_publisher,
-            # rviz,
+            bridge_pan_cmd,
+            bridge_tilt_cmd,
+            bridge_camera_x1,
         ]
     )
